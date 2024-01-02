@@ -1,5 +1,4 @@
-import Image from 'next/image'
-import ContactForm from './formTdagger/contactForm'
+import ContactForm from './contactForm'
 
 export default function Home() {
   return (
