@@ -52,60 +52,53 @@ const Formulario = () => {
     const listId = '900201694393';
 
     try {
-      const resp = await fetch(
-        `https://api.clickup.com/api/v2/list/${listId}/task?${new URLSearchParams({
-          custom_task_ids: 'true',
-          team_id: '123',
-        }).toString()}`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `${apiKey}`,
-          },
-          body: JSON.stringify({
-            name: `${formData.nombre}, ${formData.apellido}`,
-            description: 'Prueba tarea contacto',
-            markdown_description: `${formData.observaciones}`,
-            assignees: [183],
-            tags: ['T-Dagger'],
-            priority: 3,
-            due_date: timestampActual,
-            due_date_time: false,
-            notify_all: true,
-            parent: null,
-            links_to: null,
-            check_required_custom_fields: true,
-            custom_fields: [
-              {
-                id: '5ae9c0c7-de18-46f7-80b7-c54428475963',
-                value: formData.email
-              },
-              {
-                id: '6c85a9fa-0106-4501-8c18-1cacd5fb1351',
-                value: formData.observaciones
-              },
-              {
-                id: '856590cf-e268-43d6-ba72-7a1daf26b8af',
-                value: formData.ciudad
-              },
-              {
-                id: 'cfa1316b-a8e7-413f-adaf-888ad7274fe5',
-                value: formData.pais
-              },
-              {
-                id: 'e8ed4be5-7fea-437a-b03e-d37d653d62ab',
-                value: formData.nombre
-              },
-              {
-                id: 'e9df409d-3f85-42eb-b03a-58c30fe2a3d9',
-                value: formData.apellido
-              }
-            ]
-          }),
-        }
-      );
-
+      const resp = await fetch('http://localhost:3001/api/clickup', { // Cambia la URL a tu función API local
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: `${formData.nombre} ${formData.apellido}`,
+          description: 'Prueba tarea contacto',
+          markdown_description: `${formData.observaciones}`,
+          assignees: [183],
+          tags: ['T-Dagger'],
+          priority: 3,
+          due_date: timestampActual,
+          due_date_time: false,
+          notify_all: true,
+          parent: null,
+          links_to: null,
+          check_required_custom_fields: true,
+          custom_fields: [
+            {
+              id: '5ae9c0c7-de18-46f7-80b7-c54428475963',
+              value: formData.email,
+            },
+            {
+              id: '6c85a9fa-0106-4501-8c18-1cacd5fb1351',
+              value: formData.observaciones,
+            },
+            {
+              id: '856590cf-e268-43d6-ba72-7a1daf26b8af',
+              value: formData.ciudad,
+            },
+            {
+              id: 'cfa1316b-a8e7-413f-adaf-888ad7274fe5',
+              value: formData.pais,
+            },
+            {
+              id: 'e8ed4be5-7fea-437a-b03e-d37d653d62ab',
+              value: formData.nombre,
+            },
+            {
+              id: 'e9df409d-3f85-42eb-b03a-58c30fe2a3d9',
+              value: formData.apellido,
+            },
+          ],
+        }),
+      });
+  
       if (resp.ok) {
         setSuccessMessage(true);
         setErrorMessage(false);
@@ -113,7 +106,7 @@ const Formulario = () => {
         setSuccessMessage(false);
         setErrorMessage(true);
       }
-
+  
       const data = await resp.json();
       console.log('Respuesta del servidor:', data);
     } catch (error) {
