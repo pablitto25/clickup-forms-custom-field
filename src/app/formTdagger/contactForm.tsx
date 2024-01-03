@@ -210,7 +210,7 @@ const Formulario = () => {
               </svg>
             </div>
             <div>
-              <p className='text-[#00ff00] text-lg'>Confirmación de solicitud de refuerzos.</p>
+              <p className='text-[#00ff00] text-lg whitespace-nowrap'>Confirmación de solicitud de refuerzos.</p>
             </div>
           </div>
         )}
@@ -229,7 +229,7 @@ const Formulario = () => {
               </svg>
             </div>
             <div>
-              <p className='text-red-500 text-lg'>Ocurrio un error intentalo mas tarde.</p>
+              <p className='text-red-500 text-lg whitespace-nowrap'>Ocurrio un error intentalo mas tarde.</p>
             </div>
           </div>
         )}
