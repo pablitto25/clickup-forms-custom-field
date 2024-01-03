@@ -52,7 +52,7 @@ const Formulario = () => {
     const listId = '900201694393';
 
     try {
-      const resp = await fetch('http://localhost:3000/api/clickup', { // Cambia la URL a tu función API local
+      const resp = await fetch('https://contact.t-daggerla.com/api/clickup', { // Cambia la URL a tu función API local
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -121,11 +121,11 @@ const Formulario = () => {
       <div className='contact_title col-span-1 w-10/12 text-white'>
         <p className='text-2xl font-bold pb-3'>¿NECESITAS REFUERZOS?</p>
         <p className='border-solid border-t border-[#00E200] w-12 pt-3'></p>
-        <p className='text-lg'>Completa el formulario para que podamos ayudarte con lo que necesites.</p>
+        <p className='text-lg pb-4'>Completa el formulario para que podamos ayudarte con lo que necesites.</p>
       </div>
       <div className='contact_form col-span-2'>
         <form onSubmit={handleSubmit} className='grid grid-cols-2 gap-y-2 gap-x-4'>
-          <div className="box">
+          <div className="box lg:col-span-1 max-sm:col-span-2">
             <input
               className='h-12 w-full pl-4 border-solid border-2 border-white-700 bg-black hover:border-gray-400 text-lg text-white'
               type="text"
@@ -135,7 +135,7 @@ const Formulario = () => {
               placeholder='¿CUÁL ES TU NOMBRE?*'
             />
           </div>
-          <div className="box">
+          <div className="box lg:col-span-1 max-sm:col-span-2">
             <input
               className='h-12 w-full pl-4 border-solid border-2 border-white-700 bg-black hover:border-gray-400 text-lg text-white'
               type="text"
@@ -145,7 +145,7 @@ const Formulario = () => {
               placeholder='¿CUÁL ES TU APELLIDO?*'
             />
           </div>
-          <div className="box">
+          <div className="box lg:col-span-1 max-sm:col-span-2">
             <select
               id="countries"
               name='pais'
@@ -163,7 +163,7 @@ const Formulario = () => {
               ))}
             </select>
           </div>
-          <div className="box">
+          <div className="box lg:col-span-1 max-sm:col-span-2">
             <input
               className='h-12 w-full pl-4 border-solid border-2 border-white-700 bg-black hover:border-gray-400 text-lg text-white'
               type="text"
