@@ -3,9 +3,9 @@ import { NextApiRequest, NextApiResponse } from 'next';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     // Lógica para manejar la solicitud POST a ClickUp
-    const listId = '900201694393';
-    const apiKey = process.env.NEXT_PUBLIC_CLICKUP_API_URL;
-
+    const listId = '901400948190';
+    const apiKey = process.env.CLICKUP_API_URL;
+    
     try {
       const response = await fetch(
         `https://api.clickup.com/api/v2/list/${listId}/task?custom_task_ids=true&team_id=123`,
@@ -13,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: 'pk_67345527_00IQC0IGNAWMR8SKOV5PZG1DVV33W8BV',
+            Authorization: 'pk_67345527_TLBZHQPZ6ZA8I21222OR8MDQEJR1ZO0X',
           },
           body: JSON.stringify(req.body),
         }

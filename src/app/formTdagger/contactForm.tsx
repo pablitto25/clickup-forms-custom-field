@@ -16,6 +16,7 @@ const apiKey = process.env.NEXT_PUBLIC_CLICKUP_API_URL;
 
 
 const Formulario = () => {
+
   const [formData, setFormData] = useState({
     email: '',
     observaciones: '',
@@ -49,10 +50,9 @@ const Formulario = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const listId = '900201694393';
 
     try {
-      const resp = await fetch('https://contact.t-daggerla.com/api/clickup', { // Cambia la URL a tu función API local
+      const resp = await fetch('https://contact.t-daggerla.com/api/clickuptdagger', { // Cambia la URL a tu función API local
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
