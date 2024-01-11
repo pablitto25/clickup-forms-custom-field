@@ -13,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: 'pk_67345527_TLBZHQPZ6ZA8I21222OR8MDQEJR1ZO0X',
+            Authorization: 'pk_67345527_LI5JBHWM2CDAPWAK7JGCFO7PR3KVA4WA',
           },
           body: JSON.stringify(req.body),
         }

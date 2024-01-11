@@ -7,9 +7,9 @@ export default function handler(req: any, res: any) {
             keys.client_email, undefined, keys.private_key, ['https://www.googleapis.com/auth/spreadsheets']
         );
 
-        client.authorize(async function(err: any, tokens: any) {
+        client.authorize(async function (err: any, tokens: any) {
             if (err) {
-                return res.status(400).send(JSON.stringify({ error: true }));
+                return res.status(500).send(JSON.stringify({ error: true, message: 'Internal Server Error' }));
             }
 
             const gsapi = google.sheets({ version: 'v4', auth: client });
@@ -21,9 +21,9 @@ export default function handler(req: any, res: any) {
             };
 
             let data = await gsapi.spreadsheets.values.get(opt);
-            return res.status(400).send(JSON.stringify({ error: false, data: data.data.values }));
+            return res.status(200).send(JSON.stringify({ error: false, data: data.data.values }));
         });
     } catch (e) {
-        return res.status(400).send(JSON.stringify({ error: true }));
+        return res.status(500).send(JSON.stringify({ error: true, message: 'Internal Server Error' }));
     }
 }

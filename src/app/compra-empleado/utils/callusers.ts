@@ -14,6 +14,8 @@ export interface MemberData {
   interface TeamData {
     members: MemberData[];
   }
+
+  const key = process.env.NEXT_PUBLIC_CLICKUP_API_URL;
   
   export const fetchUsersClickUp = async (): Promise<TeamData[]> => {
     try {
@@ -22,7 +24,7 @@ export interface MemberData {
         {
           method: 'GET',
           headers: {
-            Authorization: 'pk_67345527_TLBZHQPZ6ZA8I21222OR8MDQEJR1ZO0X'
+            Authorization: `${key}`
           }
         }
       );
