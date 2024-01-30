@@ -6,6 +6,11 @@ import { fetchDataVtexProducts } from './utils/callvtexproducts';
 
 export default function Compraempleado() {
 
+    const fechaActual = new Date();
+    const timestampActual = fechaActual.getTime();
+    const [successMessage, setSuccessMessage] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(false);
+
     const [userList, setUserList] = useState<JSX.Element[]>([]);
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [searchTermProduct, setSearchTermProduct] = useState<string>('');
@@ -23,7 +28,7 @@ export default function Compraempleado() {
     const [searchTermProductInput, setSearchTermProductInput] = useState<string>('');
 
     const [formData, setFormData] = useState({
-        solicitante: '',
+        solicitante: 0,
         productoSolicitado: '',
         correo: '',
         linkProducto: '',
@@ -55,7 +60,7 @@ export default function Compraempleado() {
                                 setShowSolicitante(!showSolicitante); // Ocultar icono buscar usuario
                                 setFormData({
                                     ...formData,
-                                    solicitante: `${member.user.id}`,
+                                    solicitante: parseInt(`${member.user.id}`),
                                     correo: `${member.user.email}`
                                 });
                                 
@@ -198,8 +203,82 @@ export default function Compraempleado() {
             linkProducto: `https://www.shipin.ar/${selectedLink}/p`
         });
     };
-
+     //borrar
      console.log(formData);
+
+     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        try {
+            const resp = await fetch('http://localhost:3000/api/clickupcompraempleado', { // Cambia la URL a tu función API local
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                name: `${selectedUser?.user.username}`,
+                description: 'Prueba tarea contacto',
+                markdown_description: 'Vacio',
+                assignees: [183],
+                tags: ['Compra-Empleado'],
+                priority: 3,
+                due_date: timestampActual,
+                due_date_time: false,
+                notify_all: true,
+                parent: null,
+                links_to: null,
+                check_required_custom_fields: true,
+                custom_fields: [
+                  {
+                    id: '08e07798-a026-4de3-ae65-73fc584120b4',
+                    value: formData.productoSolicitado,
+                  },
+                  
+                  {
+                    id: 'd0733872-2b3a-41f9-8897-164e7591c805',
+                    value: {
+                        add: [67345527],
+                        rem: [0]
+                    }
+                  }, 
+                  
+                  {
+                    id: '0e59b7eb-d311-4878-9d77-bc19acb52fcd',
+                    value: formData.correo,
+                  },
+                  {
+                    id: '71900659-2adf-4136-b408-079244e7b690',
+                    value: formData.linkProducto,
+                  },
+                  /* {
+                    id: 'a2f42db9-fcb4-4d20-8967-7917604e56af',
+                    value: formData.productoRefurbish,
+                  }, */
+                  {
+                    id: 'f5a3ed08-95aa-42ed-bdb1-c31ca86e0290',
+                    value: formData.dni,
+                  }, 
+                ],
+              }),
+            });
+        
+            if (resp.ok) {
+              setSuccessMessage(true);
+              setErrorMessage(false);
+            } else {
+              setSuccessMessage(false);
+              setErrorMessage(true);
+            }
+        
+            const data = await resp.json();
+            console.log('Respuesta del servidor:', data);
+          } catch (error) {
+            console.error('Error al enviar el formulario:', error);
+            setSuccessMessage(false);
+            setErrorMessage(true);
+          }
+
+     }
 
 
     return (
@@ -210,7 +289,7 @@ export default function Compraempleado() {
                     <p className='text-2xl pt-6 pb-6 text-[#D5D6D7] text-center font-medium'>Formulario de compras de empleados</p>
                     <p className='text-sm text-[#D5D6D7] text-center'>Bienvenido al formulario de solicitud de compras de empleados. Acá deberás cargar tu solicitud en caso de proceder con la compra de algún producto comercializado por la empresa. </p>
                 </div>
-                <form>
+                <form onSubmit={handleSubmit}>
                     <div className='pt-12'>
                         <label className='text-xs pb-1 text-white'>Solicitante<span className='text-red-500'>*</span></label>
                         {showSolicitante && (
@@ -349,6 +428,44 @@ export default function Compraempleado() {
                     </div>
                     <button className='bg-[#F10000] font-bold text-sm hover:text-white w-full h-14 text-white' type="submit">Enviar</button>
                 </form>
+                {successMessage && (
+          <div className='success flex flex-row items-center mx-80'>
+            <div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-6 h-6 bg-[#00ff00] rounded-full"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+              </svg>
+            </div>
+            <div>
+              <p className='text-[#00ff00] text-lg whitespace-nowrap'>Confirmación de solicitud de refuerzos.</p>
+            </div>
+          </div>
+        )}
+        {errorMessage && (
+          <div className='error flex flex-row items-center mx-80'>
+            <div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-6 h-6 bg-red-500 rounded-full"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+              </svg>
+            </div>
+            <div>
+              <p className='text-red-500 text-lg whitespace-nowrap'>Ocurrio un error intentalo mas tarde.</p>
+            </div>
+          </div>
+        )}
             </div>
         </main>
     )
