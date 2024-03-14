@@ -250,10 +250,6 @@ export default function Compraempleado() {
                     id: '71900659-2adf-4136-b408-079244e7b690',
                     value: formData.linkProducto,
                   },
-                  /* {
-                    id: 'a2f42db9-fcb4-4d20-8967-7917604e56af',
-                    value: formData.productoRefurbish,
-                  }, */
                   {
                     id: 'f5a3ed08-95aa-42ed-bdb1-c31ca86e0290',
                     value: formData.dni,
