@@ -1,9 +1,13 @@
 "use client"
 import React, { useState } from 'react';
-import styles from '@/app/ui/form-compliance.module.css';
+import style from '@/app/styles/form-compliance.module.css';
 import ImageDropzone from './utils/ImageDropzone';
-import { Switch, Button } from "@nextui-org/react";
-import axios from 'axios'; // Importar Axios
+import { Button, Image} from "@nextui-org/react";
+import { Raleway } from 'next/font/google';
+
+const raleway = Raleway({ subsets: ['latin'], style: 'italic' })
+const raleway2 = Raleway({ subsets: ['latin'] })
+
 
 interface FormDataa {
     nombreYapellido: string;
@@ -22,6 +26,9 @@ const FormCompliance: React.FC = () => {
     const timestampActual = fechaActual.getTime();
     const [successMessage, setSuccessMessage] = useState(false);
     const [errorMessage, setErrorMessage] = useState(false);
+    const [selectionButton, setSelectionButton] = useState(true);
+    const [showRegularForm, setShowRegularForm] = useState(false);
+    const [showAnonymousForm, setShowAnonymousForm] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -64,7 +71,7 @@ const FormCompliance: React.FC = () => {
 
                 try {
                     const taskIdd = data.id;
-                    const apiKey = 'pk_67345527_67JFLU4GLNKKU4H9YH1SS9FFREQ1Y97U';
+                    const apiKey = 'pk_67345527_MM90CA72SZNR4QPWA8V75X15FQZO7Y47';
                     const query = new URLSearchParams({
                         custom_task_ids: 'true',
                         team_id: '9002029932'
@@ -111,7 +118,7 @@ const FormCompliance: React.FC = () => {
         }));
     };
 
-    const handleDescripcion = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleDescripcion = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData(prevState => ({
             ...prevState,
@@ -125,88 +132,170 @@ const FormCompliance: React.FC = () => {
     };
 
     return (
-        <main className='flex min-h-screen flex-col items-center'>
-            <form className={styles.body} onSubmit={handleSubmit}>
-                <p className=''>Formulario de Denuncia / Complaint form</p>
-                <div className="flex flex-col gap-2">
-                    <Switch isSelected={isSelected} onValueChange={setIsSelected}>
-                        Anonimo o no
-                    </Switch>
+        <main className={`${style.shape} flex min-h-screen flex-col items-center`}>
+            <div className='pt-4 relative'>
+                <div className='grid grid-cols-2 lg:grid-cols-4 gap-0'>
+                    <div className='lg:col-start-2 lg:col-span-1'>
+                        <p className={`${raleway.className} font-raleway bg-[#FF0000] text-white text-[0.8rem] lg:text-[1.2rem] p-6 lg:p-12 rounded-[18px] relative z-10`}>Conocer en profundidad nuestra cultura institucional nos ayuda a alinear mejor nuestros objetivos para crece hacia donde queremos crecer.</p>
+                    </div>
+                    <div className='h-[10rem] lg:h-[12rem] pl-8 lg:col-start-3 lg:col-span-2 flex flex-col justify-center bg-[#FFFFFF] shadow-xl  w-3/4 lg:w-2/5 rounded-t rounded-b rounded-r-[25px] relative z-0 ml-[-10px]'>
+                        <p className={`${raleway2.className}text-[0.8rem] lg:text-[1.2rem] pb-4`}>Código de ética y gobierno corporativo</p>
+                        <div className="flex justify-center">
+                            <Button className='bg-[#FF0000] text-[#FFFFFF] shadow-lg text-[0.8rem] lg:text-[1rem] h-7 lg:h-9  rounded-full'>
+                                Leer
+                            </Button>
+                        </div>
+                    </div>
                 </div>
-                {isSelected && (
-                    <div className='flex flex-col'>
-                        <label>Nombre - Apellido / Name - Last Name</label>
-                        <input
-                            name='nombreYapellido'
-                            placeholder='Introducir texto'
-                            value={formDataa.nombreYapellido}
-                            onChange={handleName}
-                        />
+                {selectionButton && (
+                    <div className='grid grid-cols-2 lg:grid-cols-2 pt-12'>
+                        <div className='lg:col-start-1 lg:col-span-1 lg:pl-64 '>
+                            <Image
+                                src="/image-form-compliance.png"
+                                width={719}
+                                height={436}
+                                alt="Picture of the author">
+
+                            </Image>
+                        </div>
+                        <div className='h-[9rem] gap-4 lg:h-[12rem] pl-8 pt-12 lg:col-start-2 lg:col-span-2 flex flex-col bg-[#FFFFFF] w-3/4 lg:w-3/5 rounded-t rounded-b rounded-r-[25px] relative z-0 ml-[-10px]'>
+                            <p className={`${raleway.className}text-[1.2rem] lg:text-[2rem]`}>Formulario de reporte</p>
+                            <div className='flex gap-6 flex-col pl-6 pt-6'>
+                                <Button
+                                    className={`${raleway2.className} bg-[#FF0000] text-[#FFFFFF] text-[0.8rem] lg:text-[1rem] rounded-full w-[12rem] lg:w-[18rem]`}
+                                    onClick={() => {
+                                        setShowRegularForm(true);
+                                        setShowAnonymousForm(false);
+                                        setSelectionButton(false);
+                                    }}
+                                >
+                                    Enviar reporte
+                                </Button>
+
+                                <Button
+                                    className={`${raleway2.className} bg-[#FF0000] text-[#FFFFFF] text-[0.8rem] lg:text-[1rem] rounded-full w-[12rem] lg:w-[18rem]`}
+                                    onClick={() => {
+                                        setShowRegularForm(false);
+                                        setShowAnonymousForm(true);
+                                        setSelectionButton(false);
+                                    }}
+                                >
+                                    Enviar reporte anónimo
+                                </Button>
+                            </div>
+                        </div>
                     </div>
                 )}
-                <div className='flex flex-col'>
-                    <label>Descripción de los hechos o eventos / Description of facts or events*</label>
-                    <input
-                        name='descripcion'
-                        placeholder='Introducir texto'
-                        value={formDataa.descripcion}
-                        onChange={handleDescripcion}
-                    />
-                </div>
-                <div className='flex flex-col'>
-                    <label>Evidencia / Evidence*</label>
-                    <ImageDropzone onImageDrop={handleImageDrop} />
-                    {selectedImage && (
-                        <div className='flex flex-col justify-center items-center'>
-                            <h2>Imagen Seleccionada</h2>
-                            <img src={URL.createObjectURL(selectedImage)} alt="Imagen seleccionada" style={{ maxWidth: '500px' }} />
+
+                {showRegularForm && (
+                    <div className='grid grid-cols-2 lg:grid-cols-2 pt-12'>
+                        <div className='lg:col-start-1 lg:col-span-1 lg:pl-64 '>
+                            <Image
+                                src="/image-form-compliance.png"
+                                width={719}
+                                height={436}
+                                alt="Picture of the author">
+
+                            </Image>
                         </div>
-                    )}
-                </div>
-                <div className='flex justify-center items-center p-2'>
-                    <Button color="primary" type="submit">
-                        Enviar
-                    </Button>
-                </div>
-            </form>
-            {successMessage && (
-                <div className='success flex flex-row items-center mx-80'>
-                    <div>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth="1.5"
-                            stroke="currentColor"
-                            className="w-6 h-6 bg-[#00ff00] rounded-full"
-                        >
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                        </svg>
+                        <form onSubmit={handleSubmit}>
+                            <div className='h-[9rem] gap-4 lg:h-[12rem] pl-8 pt-12 lg:col-start-2 lg:col-span-2 flex flex-col bg-[#FFFFFF] w-3/4 lg:w-3/5 rounded-t rounded-b rounded-r-[25px] relative z-0 ml-[-10px]'>
+                                <p className={`${raleway.className}text-[1.2rem] lg:text-[2rem]`}>Formulario confidencial
+                                    <button
+                                        className='bg-[#FF0000] rounded-lg p-1'
+                                        onClick={() => {
+                                            setShowRegularForm(false);
+                                            setShowAnonymousForm(false);
+                                            setSelectionButton(true);
+                                        }}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H2.25" />
+                                        </svg>
+
+                                    </button></p>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className='col-span-full'>
+                                        <input className='w-3/4 border-b border-gray-400'
+                                            name='nombreYapellido'
+                                            placeholder='Nombre y apellido'
+                                            value={formDataa.nombreYapellido}
+                                            onChange={handleName}
+                                        />
+                                    </div>
+                                    <div className="row-start-2">
+                                        <textarea
+                                            name='descripcion'
+                                            placeholder='Mensaje'
+                                            value={formDataa.descripcion}
+                                            onChange={handleDescripcion}
+                                            id="message" rows={4} className="block p-2.5 w-full text-sm text-black-900 rounded-lg border border-gray-400 focus:ring-blue-500 focus:border-blue-500 dark:placeholder-gray-400 text-black h-40" />
+                                    </div>
+                                    <div className="flex flex-col justify-center items-center row-start-2 gap-4 pr-32">
+                                        <div className='border border-gray-400 w-32 h-28 rounded-lg text-center pt-1'>
+                                            <ImageDropzone onImageDrop={handleImageDrop} />
+                                        </div>
+                                        <div className=''>
+                                            <Button type="submit" className='bg-[#FF0000] text-[#FFFFFF] text-[0.8rem] lg:text-[0.8rem] rounded-full w-[4rem] lg:w-[4rem] h-8'>Enviar</Button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    <div>
-                        <p className='text-[#00ff00] text-lg whitespace-nowrap'>Envio exitoso.</p>
+                )}
+
+                {showAnonymousForm && (
+                    <div className='grid grid-cols-2 lg:grid-cols-2 pt-12'>
+                        <div className='lg:col-start-1 lg:col-span-1 lg:pl-64 '>
+                            <Image
+                                src="/image-form-compliance.png"
+                                width={719}
+                                height={436}
+                                alt="Picture of the author">
+                            </Image>
+                        </div>
+                        <form onSubmit={handleSubmit}>
+                            <div className='h-[9rem] gap-4 lg:h-[12rem] pl-8 pt-12 lg:col-start-2 lg:col-span-2 flex flex-col bg-[#FFFFFF] w-3/4 lg:w-3/5 rounded-t rounded-b rounded-r-[25px] relative z-0 ml-[-10px]'>
+                                <p className={`${raleway.className}text-[1.2rem] lg:text-[2rem]`}>Formulario anónimo
+                                <button
+                                        className='bg-[#FF0000] rounded-lg p-1'
+                                        onClick={() => {
+                                            setShowRegularForm(false);
+                                            setShowAnonymousForm(false);
+                                            setSelectionButton(true);
+                                        }}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H2.25" />
+                                        </svg>
+
+                                    </button></p>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="row-start-2">
+                                        <textarea
+                                            name='descripcion'
+                                            placeholder='Mensaje'
+                                            value={formDataa.descripcion}
+                                            onChange={handleDescripcion}
+                                            id="message" rows={4} className="block p-2.5 w-full text-sm text-black-900 rounded-lg border border-gray-400 focus:ring-blue-500 focus:border-blue-500 dark:placeholder-gray-400 text-black h-40" />
+                                    </div>
+                                    <div className="flex flex-col justify-center items-center row-start-2 gap-4 pr-32">
+                                        <div className='border border-gray-400 w-32 h-28 rounded-lg text-center pt-1'>
+                                            <ImageDropzone onImageDrop={handleImageDrop} />
+                                        </div>
+                                        <div className=''>
+                                            <Button type="submit" className='bg-[#FF0000] text-[#FFFFFF] text-[0.8rem] lg:text-[0.8rem] rounded-full w-[4rem] lg:w-[4rem] h-8'>Enviar</Button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                </div>
-            )}
-            {errorMessage && (
-                <div className='error flex flex-row items-center mx-80'>
-                    <div>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth="1.5"
-                            stroke="currentColor"
-                            className="w-6 h-6 bg-red-500 rounded-full"
-                        >
-                            <path strokeLinecap="round" strokeLinejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                        </svg>
-                    </div>
-                    <div>
-                        <p className='text-red-500 text-lg whitespace-nowrap'>Ocurrio un error intentalo mas tarde.</p>
-                    </div>
-                </div>
-            )}
+
+                )}
+            </div>
+
+
         </main>
     )
 }
