@@ -36,7 +36,7 @@ const FormCompliance: React.FC = () => {
         e.preventDefault();
 
         try {
-            const resp = await fetch('http://localhost:3000/api/clickup-compliance', {
+            const resp = await fetch('https://contact.t-daggerla.com/api/clickup-compliance', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
