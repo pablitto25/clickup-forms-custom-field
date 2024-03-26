@@ -4,7 +4,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method === 'POST') {
     // Lógica para manejar la solicitud POST a ClickUp
     const listId = '901401820025';
-    const apiKey = process.env.CLICKUP_API_URL;
+    const apiKey = process.env.NEXT_PUBLIC_CLICKUP_API_URL;
     
     try {
       const response = await fetch(
@@ -13,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: 'pk_67345527_MM90CA72SZNR4QPWA8V75X15FQZO7Y47',
+            Authorization: `${apiKey}`,
           },
           body: JSON.stringify(req.body),
         }
