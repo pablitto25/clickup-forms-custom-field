@@ -164,7 +164,7 @@ const FormCompliance: React.FC = () => {
                     <div className='h-[10rem] lg:h-[12rem] pl-8 lg:col-start-3 lg:col-span-2 flex flex-col justify-center bg-[#FFFFFF] shadow-xl  w-3/4 lg:w-2/5 rounded-t rounded-b rounded-r-[25px] relative z-0 ml-[-10px]'>
                         <p className={`${raleway2.className}text-[0.8rem] lg:text-[1.2rem] pb-4`}>Código de ética y gobierno corporativo</p>
                         <div className="flex justify-center">
-                            <Link href="https://latamly.com/etica/"><Button className='bg-[#FF0000] text-[#FFFFFF] shadow-lg text-[0.8rem] lg:text-[1rem] h-7 lg:h-9  rounded-full'>
+                            <Link href="https://latamly.com/etica/" target='_blank'><Button className='bg-[#FF0000] text-[#FFFFFF] shadow-lg text-[0.8rem] lg:text-[1rem] h-7 lg:h-9  rounded-full'>
                                 Leer
                             </Button></Link>
                         </div>
