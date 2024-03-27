@@ -1,10 +1,10 @@
 import { google } from "googleapis";
-import keys from "../../../key.json";
+/* import keys from '/key.json'; */
 
 export default function handler(req: any, res: any) {
     try {
         const client = new google.auth.JWT(
-            keys.client_email, undefined, keys.private_key, ['https://www.googleapis.com/auth/spreadsheets']
+           /*  keys.client_email, undefined, keys.private_key, ['https://www.googleapis.com/auth/spreadsheets'] */
         );
 
         client.authorize(async function (err: any, tokens: any) {
