@@ -1,0 +1,21 @@
+.shape{
+    background: white;
+    
+}
+
+
+.textDesc{
+    
+    padding-bottom: 12px;
+
+}
+
+.btnEnviar{
+    margin-top: 15px;
+    background-color: rgb(45, 151, 238);
+}
+
+
+.titleChoice{
+    color: white;
+}
