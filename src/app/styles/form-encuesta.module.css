@@ -1,13 +1,21 @@
 .shape{
     background: white;
-    
 }
+
 
 
 .textDesc{
     
     padding-bottom: 12px;
 
+}
+
+.btnNextPrev{
+    color: black;
+}
+
+.titleEncuensta{
+    color: black;
 }
 
 .btnEnviar{
