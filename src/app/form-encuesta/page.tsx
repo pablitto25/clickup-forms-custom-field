@@ -263,7 +263,6 @@ const FormEncuesta: React.FC = () => {
             <h1 className={`text-white`}>Encuesta - Latamly</h1>
 
             <form className={`text-white`}>
-                <h2>Informacion de Contacto</h2>
                 {step == 0 && (
                     <div>
                         <input className='w-3/4 border-b border-gray-400 text-black'
