@@ -15,9 +15,6 @@ const FormEncuestaRework: React.FC<AppProps> = ({ Component, pageProps }) => {
     return (
         <main className={`${style.shape}`}>
 
-            {/* <Header/>
-             <Content/> */}
-
             <SurveyProvider>
                 <Header />
                 <Content />

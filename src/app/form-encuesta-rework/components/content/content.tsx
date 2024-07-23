@@ -1,17 +1,14 @@
 
-import { Button } from "@nextui-org/react";
 import Survey from "./survey";
-import { useState } from "react";
 import ButtonNextPreview from "../utils/buttonsNextPreview";
 
 const Content: React.FC = () => {
     return (
-        <section className='flex flex-col justify-center items-center'>
-            <div>
-                <h1 className="text-3xl pt-12">Encuesta Latamly</h1>
-            </div>
-            <div>
-                <Survey />
+        <section className='flex flex-col items-center w-full'>
+            <div className="flex justify-center items-center pb-8 w-full">
+                <div className="w-full max-w-8xl mx-auto">
+                    <Survey />
+                </div>
             </div>
             <div>
                 <ButtonNextPreview />
